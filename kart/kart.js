@@ -43,6 +43,34 @@ function onEachFeature(feature, layer) {
         layer.bindPopup(feature.properties.popupContent);
     }
 }
+
+function findMaxMinCoords(coords){
+  minLat=10000;
+  minLon=10000;
+  maxLat=0;
+  maxLon=0;
+  for(var i=0;i<coords.length;i++){
+    var coord=coords[i];
+    if(coord[0]<minLat){
+      minLat=coord[0]
+      //console.log(minLat);
+    }
+    if(coord[0]>maxLat){
+      maxLat=coord[0]
+      //console.log(maxLat);
+    }
+    if(coord[1]<minLon){
+      minLon=coord[1]
+      //console.log(minLat);
+    }
+    if(coord[1]>maxLon){
+      maxLon=coord[1]
+      //console.log(maxLat);
+    }
+  }
+  return [minLat,minLon,maxLat,maxLon]
+}
+
 var cloudMade = L.tileLayer('http://b.tile.stamen.com/watercolor/{z}/{x}/{y}.png', {
     maxZoom: 18
 })
@@ -54,15 +82,19 @@ var kartverket = L.tileLayer('http://opencache.statkart.no/gatekeeper/gk/gk.open
 });
 
 var bikemap = L.tileLayer("http://geo-elzapp.rhcloud.com/tiles/bikemap/{z}/{x}/{y}.png", { attribution: "Map data © 2011 OpenStreetMap contributors", "minZoom": 11, "maxZoom": 17, "tileSize": 256 })
-var map = L.map('map', { "center": loc, "zoom": 15, "layers": [kartverket] })
+var gjs=L.geoJson();
+var map = L.map('map', { "center": loc, "zoom": 15, "layers": [kartverket,gjs] })
 
            var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
                 if (xhttp.readyState == 4 && xhttp.status == 200) {
-                var gjs=L.geoJson(toGeoJSON["gpx"]((new DOMParser()).parseFromString(xhttp.responseText, 'text/xml')));
+                  var geoJsonObj=toGeoJSON["gpx"]((new DOMParser()).parseFromString(xhttp.responseText, 'text/xml'));
+                  console.log(findMaxMinCoords(geoJsonObj.features[0].geometry.coordinates));
+                  gjs.addData(geoJsonObj)
                 }
-                L.control.layers({"Statens Kartverk": kartverket, "Google": google, "cloudmade": cloudMade, "openStreetMap": osm }, {"gjs":gjs}).addTo(map);
+
             };
+            L.control.layers({"Statens Kartverk": kartverket, "Google": google, "cloudmade": cloudMade, "openStreetMap": osm }, {"gjs":gjs}).addTo(map);
             xhttp.open("GET", "jd.gpx", true);
   xhttp.send();
 
