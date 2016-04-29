@@ -10,6 +10,7 @@ if (typeof (Number.prototype.toRad) === "undefined") {
         return this * Math.PI / 180;
     }
 }
+
 function dist(p1, p2) {
     var lat1 = p1[0];
     var lat2 = p2[0];
@@ -55,8 +56,18 @@ var kartverket = L.tileLayer('http://opencache.statkart.no/gatekeeper/gk/gk.open
 var bikemap = L.tileLayer("http://geo-elzapp.rhcloud.com/tiles/bikemap/{z}/{x}/{y}.png", { attribution: "Map data © 2011 OpenStreetMap contributors", "minZoom": 11, "maxZoom": 17, "tileSize": 256 })
 var map = L.map('map', { "center": loc, "zoom": 15, "layers": [kartverket] })
 
+           var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (xhttp.readyState == 4 && xhttp.status == 200) {
+                var gjs=L.geoJson(toGeoJSON["gpx"]((new DOMParser()).parseFromString(xhttp.responseText, 'text/xml')));
+                }
+                L.control.layers({"Statens Kartverk": kartverket, "Google": google, "cloudmade": cloudMade, "openStreetMap": osm }, {"gjs":gjs}).addTo(map);
+            };
+            xhttp.open("GET", "jd.gpx", true);
+  xhttp.send();
+
 //.setView([60.3713, 5.3380], 15);
-L.control.layers({"Statens Kartverk": kartverket, "Google": google, "cloudmade": cloudMade, "openStreetMap": osm }).addTo(map);
+
 
 
 var timeout = null;
