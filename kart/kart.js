@@ -68,7 +68,7 @@ function findMaxMinCoords(coords){
       //console.log(maxLat);
     }
   }
-  return [minLat,minLon,maxLat,maxLon]
+  return [[minLon,minLat],[maxLon,maxLat]]
 }
 
 var cloudMade = L.tileLayer('//b.tile.stamen.com/watercolor/{z}/{x}/{y}.png', {
@@ -89,7 +89,8 @@ var map = L.map('map', { "center": loc, "zoom": 15, "layers": [kartverket,gjs] }
             xhttp.onreadystatechange = function() {
                 if (xhttp.readyState == 4 && xhttp.status == 200) {
                   var geoJsonObj=toGeoJSON["gpx"]((new DOMParser()).parseFromString(xhttp.responseText, 'text/xml'));
-                  console.log(findMaxMinCoords(geoJsonObj.features[0].geometry.coordinates));
+                  bounds=findMaxMinCoords(geoJsonObj.features[0].geometry.coordinates)
+                  map.fitBounds(bounds);
                   gjs.addData(geoJsonObj)
                 }
 
@@ -118,7 +119,7 @@ var findMe = function () {
 }
 
 if (!gothashloc) {
-    findMe();
+    //findMe();
 } else {
     var l = new L.LatLng(hashloc[1], hashloc[2]);
     map.setView(l, hashloc[0], false);
