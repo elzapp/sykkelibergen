@@ -71,17 +71,17 @@ function findMaxMinCoords(coords){
   return [minLat,minLon,maxLat,maxLon]
 }
 
-var cloudMade = L.tileLayer('http://b.tile.stamen.com/watercolor/{z}/{x}/{y}.png', {
+var cloudMade = L.tileLayer('//b.tile.stamen.com/watercolor/{z}/{x}/{y}.png', {
     maxZoom: 18
 })
-var osm = L.tileLayer('http://b.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+var osm = L.tileLayer('//b.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 });
-var google = L.tileLayer("http://mt{s}.google.com/vt?x={x}&y={y}&z={z}&lyrs=s", { name: "googlem", alt: "Google aerial", attribution: "Google", subdomains: "0123", tileSize: 256, minZoom: 0, maxZoom: 18 });
-var kartverket = L.tileLayer('http://opencache.statkart.no/gatekeeper/gk/gk.open_gmaps?layers=matrikkel_bakgrunn&zoom={z}&x={x}&y={y}', {
+var google = L.tileLayer("//mt{s}.google.com/vt?x={x}&y={y}&z={z}&lyrs=s", { name: "googlem", alt: "Google aerial", attribution: "Google", subdomains: "0123", tileSize: 256, minZoom: 0, maxZoom: 18 });
+var kartverket = L.tileLayer('//opencache.statkart.no/gatekeeper/gk/gk.open_gmaps?layers=matrikkel_bakgrunn&zoom={z}&x={x}&y={y}', {
     "minZoom": 0, "maxZoom": 17, "tileSize": 256
 });
 
-var bikemap = L.tileLayer("http://geo-elzapp.rhcloud.com/tiles/bikemap/{z}/{x}/{y}.png", { attribution: "Map data © 2011 OpenStreetMap contributors", "minZoom": 11, "maxZoom": 17, "tileSize": 256 })
+var bikemap = L.tileLayer("//geo-elzapp.rhcloud.com/tiles/bikemap/{z}/{x}/{y}.png", { attribution: "Map data © 2011 OpenStreetMap contributors", "minZoom": 11, "maxZoom": 17, "tileSize": 256 })
 var gjs=L.geoJson();
 var map = L.map('map', { "center": loc, "zoom": 15, "layers": [kartverket,gjs] })
 
