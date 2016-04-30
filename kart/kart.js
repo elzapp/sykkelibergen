@@ -45,10 +45,10 @@ function onEachFeature(feature, layer) {
 }
 
 function findMaxMinCoords(coords){
-  minLat=10000;
-  minLon=10000;
-  maxLat=0;
-  maxLon=0;
+  var minLat=10000,
+      minLon=10000,
+      maxLat=0,
+      maxLon=0;
   for(var i=0;i<coords.length;i++){
     var coord=coords[i];
     if(coord[0]<minLat){
