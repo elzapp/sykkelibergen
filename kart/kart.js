@@ -67,8 +67,8 @@ var kartverket = L.tileLayer('//opencache.statkart.no/gatekeeper/gk/gk.open_gmap
 });
 
 var bikemap = L.tileLayer("//geo-elzapp.rhcloud.com/tiles/bikemap/{z}/{x}/{y}.png", { attribution: "Map data © 2011 OpenStreetMap contributors", "minZoom": 11, "maxZoom": 17, "tileSize": 256 })
-var gjs=L.geoJson();
-var map = L.map('map', { "center": loc, "zoom": 15, "layers": [kartverket,gjs] })
+var route=L.geoJson();
+var map = L.map('map', { "center": loc, "zoom": 15, "layers": [kartverket,route] })
 
            var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
@@ -76,11 +76,11 @@ var map = L.map('map', { "center": loc, "zoom": 15, "layers": [kartverket,gjs] }
                   var geoJsonObj=toGeoJSON["gpx"]((new DOMParser()).parseFromString(xhttp.responseText, 'text/xml'));
                   bounds=findMaxMinCoords(geoJsonObj.features[0].geometry.coordinates)
                   map.fitBounds(bounds);
-                  gjs.addData(geoJsonObj)
+                  route.addData(geoJsonObj)
                 }
 
             };
-            L.control.layers({"Statens Kartverk": kartverket, "Google": google, "openStreetMap": osm }, {"gjs":gjs}).addTo(map);
+            L.control.layers({"Statens Kartverk": kartverket, "Google": google, "openStreetMap": osm }, {"Rute":route}).addTo(map);
             xhttp.open("GET", "jd.gpx", true);
   xhttp.send();
 
