@@ -51,22 +51,10 @@ function findMaxMinCoords(coords){
       maxLon=0;
   for(var i=0;i<coords.length;i++){
     var coord=coords[i];
-    if(coord[0]<minLat){
-      minLat=coord[0]
-      //console.log(minLat);
-    }
-    if(coord[0]>maxLat){
-      maxLat=coord[0]
-      //console.log(maxLat);
-    }
-    if(coord[1]<minLon){
-      minLon=coord[1]
-      //console.log(minLat);
-    }
-    if(coord[1]>maxLon){
-      maxLon=coord[1]
-      //console.log(maxLat);
-    }
+    if(coord[0]<minLat) minLat=coord[0]
+    if(coord[0]>maxLat) maxLat=coord[0]
+    if(coord[1]<minLon) minLon=coord[1]
+    if(coord[1]>maxLon) maxLon=coord[1]
   }
   return [[minLon,minLat],[maxLon,maxLat]]
 }
