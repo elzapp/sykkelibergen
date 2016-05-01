@@ -126,9 +126,10 @@ if (!gothashloc) {
 }
 
 map.on('moveend', function (e) {
+    var lat,lon,zoom;
     console.log(map.getCenter())
-    var lat = map.getCenter().lat
-    var lon = map.getCenter().lng
-    var zoom = map.getZoom()
+    lat = map.getCenter().lat
+    lon = map.getCenter().lng
+    zoom = map.getZoom()
     window.location.hash = "#" + zoom + "," + lat + "," + lon;
 });
