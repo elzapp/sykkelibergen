@@ -59,9 +59,6 @@ function findMaxMinCoords(coords){
   return [[minLon,minLat],[maxLon,maxLat]]
 }
 
-var cloudMade = L.tileLayer('//b.tile.stamen.com/watercolor/{z}/{x}/{y}.png', {
-    maxZoom: 18
-})
 var osm = L.tileLayer('//b.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 });
 var google = L.tileLayer("//mt{s}.google.com/vt?x={x}&y={y}&z={z}&lyrs=s", { name: "googlem", alt: "Google aerial", attribution: "Google", subdomains: "0123", tileSize: 256, minZoom: 0, maxZoom: 18 });
@@ -83,11 +80,10 @@ var map = L.map('map', { "center": loc, "zoom": 15, "layers": [kartverket,gjs] }
                 }
 
             };
-            L.control.layers({"Statens Kartverk": kartverket, "Google": google, "cloudmade": cloudMade, "openStreetMap": osm }, {"gjs":gjs}).addTo(map);
+            L.control.layers({"Statens Kartverk": kartverket, "Google": google, "openStreetMap": osm }, {"gjs":gjs}).addTo(map);
             xhttp.open("GET", "jd.gpx", true);
   xhttp.send();
 
-//.setView([60.3713, 5.3380], 15);
 
 
 
