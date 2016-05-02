@@ -84,7 +84,7 @@ var map = L.map('map', { "center": loc, "zoom": 15, "layers": [kartverket,route]
 
             };
             L.control.layers({"Statens Kartverk": kartverket, "Google": google, "openStreetMap": osm }, {"Rute":route}).addTo(map);
-            xhttp.open("GET", "jd.gpx", true);
+            xhttp.open("GET", "routes/jd.gpx", true);
   xhttp.send();
 
 
