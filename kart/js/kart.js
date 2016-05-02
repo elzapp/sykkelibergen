@@ -61,6 +61,22 @@ function findMaxMinCoords(coords){
   }
   return [[minLon,minLat],[maxLon,maxLat]]
 }
+function findBoundsForGeoJSON(geoJsonObj){
+      var minLat=10000,
+        minLon=10000,
+        maxLat=0,
+        maxLon=0;
+    for(var i=0;i<geoJsonObj.features.length;i++){
+        var featureCoords=geoJsonObj.features[i].geometry.coordinates,
+            featureBounds;
+        featureBounds=findMaxMinCoords(featureCoords);
+        if(featureBounds[0][0]<minLon) minLon = featureBounds[0][0];
+        if(featureBounds[1][0]>maxLon) maxLon = featureBounds[1][0];
+        if(featureBounds[0][1]<minLat) minLat = featureBounds[0][1];
+        if(featureBounds[1][1]>maxLat) maxLat = featureBounds[1][1];
+    }
+    return [[minLon,minLat],[maxLon,maxLat]]
+}
 
 var osm = L.tileLayer('//b.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 });
@@ -77,7 +93,7 @@ var map = L.map('map', { "center": loc, "zoom": 15, "layers": [kartverket,route]
             xhttp.onreadystatechange = function() {
                 if (xhttp.readyState == 4 && xhttp.status == 200) {
                   var geoJsonObj=toGeoJSON["gpx"]((new DOMParser()).parseFromString(xhttp.responseText, 'text/xml'));
-                  bounds=findMaxMinCoords(geoJsonObj.features[0].geometry.coordinates)
+                  bounds=findBoundsForGeoJSON(geoJsonObj)
                   map.fitBounds(bounds);
                   route.addData(geoJsonObj)
                 }
