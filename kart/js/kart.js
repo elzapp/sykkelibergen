@@ -79,10 +79,12 @@ function findBoundsForGeoJSON(geoJsonObj){
 }
 
 var osm = L.tileLayer('//b.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 });
 var google = L.tileLayer("//mt{s}.google.com/vt?x={x}&y={y}&z={z}&lyrs=s", { name: "googlem", alt: "Google aerial", attribution: "Google", subdomains: "0123", tileSize: 256, minZoom: 0, maxZoom: 18 });
 var kartverket = L.tileLayer('//opencache.statkart.no/gatekeeper/gk/gk.open_gmaps?layers=matrikkel_bakgrunn&zoom={z}&x={x}&y={y}', {
-    "minZoom": 0, "maxZoom": 17, "tileSize": 256
+    "minZoom": 0, "maxZoom": 17, "tileSize": 256,
+    "attribution": "Kartgrunnlag: Statens kartverk (<a href='http://creativecommons.org/licenses/by-sa/3.0/no/'>cc-by-sa-3.0</a>)"
 });
 
 var bikemap = L.tileLayer("//geo-elzapp.rhcloud.com/tiles/bikemap/{z}/{x}/{y}.png", { attribution: "Map data © 2011 OpenStreetMap contributors", "minZoom": 11, "maxZoom": 17, "tileSize": 256 })
