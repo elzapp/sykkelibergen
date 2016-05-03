@@ -1,9 +1,12 @@
 var gothashloc = false;
 var hashloc = window.location.hash.substring(1).split(",")
-
+var gpx="routes/jd.gpx";
 if (hashloc.length == 3) {
     gothashloc = true;
     console.log(hashloc)
+}
+if (hashloc.length == 1) {
+    gpx="routes/"+hashloc[0]+".gpx";
 }
 if (typeof (Number.prototype.toRad) === "undefined") {
     Number.prototype.toRad = function () {
@@ -102,7 +105,7 @@ var map = L.map('map', { "center": loc, "zoom": 15, "layers": [kartverket,route]
 
             };
             L.control.layers({"Statens Kartverk": kartverket, "Google": google, "openStreetMap": osm }, {"Rute":route}).addTo(map);
-            xhttp.open("GET", "routes/jd.gpx", true);
+            xhttp.open("GET", gpx, true);
   xhttp.send();
 
 
